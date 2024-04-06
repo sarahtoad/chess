@@ -1,0 +1,149 @@
+body, html{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+h1{
+    font-family: Arial, sans-serif;
+    font-size: 2em;
+}
+
+.dance{
+    width: 200px;
+    height: 200px;
+    background: url('dance.gif') center/ cover no-repeat;
+}
+
+.button{
+    margin-top: 20px;
+}
+
+button{
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+#yesButton{
+    background-color: rgb(210, 163, 255);
+    color: #fff;
+}
+
+#noButton{
+    background-color: black;
+    color: #fff;
+    transition: transform 0.5s;
+}
+ 
+.crying-sticker{
+    position: absolute;
+    top: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    width: 200px;
+}
+
+.hidden{
+    display: none;
+}
+
+.sticker{
+    position: absolute;
+    top: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    width: 200px;
+}
+.thanks-message{
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    font-size: 16px;
+    color: black;
+}
+.are-u-sur{
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    font-size: 16px;
+    color: black;
+}
+
+.can-change-mind{
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    font-size: 16px;
+    color: black;
+}
+
+.dont-be-shy{
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    font-size: 16px;
+    color: black;
+}
+
+.please {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    font-size: 16px;
+    color: black;
+}
+
+.pleeeeease{
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    font-size: 16px;
+    color: black;
+}
+
+.last-opertunity{
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    font-size: 16px;
+    color: black;
+}
+
+.i-hate-you{
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    font-size: 16px;
+    color: black;
+}
+/*#noButton:hover{
+    transform: translateY(150px);
+}*/
