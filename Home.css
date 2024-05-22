@@ -1,0 +1,1059 @@
+/* Importation des polices Google */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+/* Importation des icônes FontAwesome */
+@import url("https://use.fontawesome.com/release/v6.5.1/css/all.css");
+
+
+/* Variables CSS globales */
+:root{
+    scroll-behavior: smooth;
+    --green:#011787;/* Couleur verte personnalisée */
+    --black:#192a56;/* Couleur noire personnalisée */
+    --light-color:#666;/* Couleur grise claire */
+    --box-shadow:0 .5rem 1.5rem rgba(0,0,0,.1);/* Ombre des boîtes */
+  --earth-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/332937/earth.jpg);/* Image de la Terre */
+  --earth-tilt: rotate(23.26deg); /* Inclinaison de la Terre */
+  --earth-day: 23.9;/* Durée du jour terrestre en heures */
+  --earth-color: #b3caff; /* Couleur de la Terre */
+  --sun-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/332937/sun.jpg);
+  --sun-tilt: rotate(0deg); /* Inclinaison du Soleil */
+  --sun-day: 600; /* Durée du jour solaire */
+  --sun-color: #cc9f4c;/* Couleur du Soleil */
+  --moon-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/122460/moon_map_1024x512.jpg);
+  --moon-tilt: rotate(0deg);/* Inclinaison de la Lune */
+  --moon-day: 29.53; /* Durée du jour lunaire */
+  --moon-color: #8e8e8d;/* Couleur de la Lune */
+}
+
+/* Réinitialisation des marges et des paddings, configuration des boîtes */
+*{
+    margin:0;padding:0;
+    box-sizing:border-box;
+    text-decoration: none;/* Suppression de la décoration du texte */
+    outline: none; /* Suppression des contours */
+    border:none;/* Suppression des bordures */
+    text-transform: capitalize;/* Mise en capitale des premiers caractères des mots */
+    transition: all .2s linear;/* Transition douce pour toutes les propriétés */
+}
+
+/* Configuration de base pour le HTML */
+html{
+    font-size: 62.5%;/* Redimensionnement de la taille de la police */
+    overflow-x: hidden; /* Suppression du défilement horizontal */
+    scroll-padding-top: 5.5rem;/* Espacement de défilement en haut */
+}
+
+/* Configuration de base pour le corps du document */
+body{ 
+    padding: 0px;
+    margin: 0px;
+}
+
+/* Définition de l'animation pour la Lune */
+@keyframes moon-animation {
+    0% {
+        transform: translateX(40px) scale(0.9); /* Translation et réduction initiale */
+        box-shadow: none; /* Pas d'ombre */
+    }
+    50% {
+        transform: translate(0px, 0px) scale(1.02); /* Échelle et position normales */
+        box-shadow: 0 0 10px #fff, 0 0 80px 2px #fff; /* Ombre blanche */
+    }
+    100% {
+        transform: translateX(-40px) scale(0.9); /* Translation opposée et réduction finale */
+        box-shadow: none; /* Pas d'ombre */
+    }
+
+}
+
+  header{
+    position: fixed; /* Fixé en haut */
+    top: 0; /* Aligner en haut */
+    left: 0; /* Aligner à gauche */
+    right: 0; /* Aligner à droite */
+    background-size: cover; /* Couvrir le fond */
+    background-position: center; /* Centrer le fond */
+    height: 100px; /* Hauteur fixe */
+    padding: 1rem; /* Padding intérieur */
+    display: flex; /* Disposition flexible */
+    align-items: center; /* Alignement vertical centré */
+    justify-content: space-between; /* Espacement entre les éléments */
+    z-index: 1000; /* Z-index élevé pour être au-dessus des autres éléments */
+    box-shadow: var(--box-shadow); /* Ombre définie par variable */
+    text-align: center; /* Centrer le texte */
+}
+    
+    
+/* Style pour les liens de la barre de navigation */
+header .navbar a{
+    font-size: 1.7rem; /* Taille de police */
+    border-radius: 4.5rem; /* Bordures arrondies */
+    padding: .6rem 1.5rem; /* Padding intérieur */
+}
+
+/* Style pour le logo */
+header .logo {
+    color: #ffffff; /* Couleur du texte */
+    font-size: 2rem; /* Taille de police */
+    font-weight: bolder; /* Police en gras */
+}
+
+/* Style pour les icônes de l'en-tête */
+header .icons #menu-bars {
+    display: none; /* Cacher par défaut */
+}
+
+/* Formulaire de recherche */
+#search-form {
+    position: fixed; /* Fixé */
+    top: -110%; /* Hors écran */
+    left: 0; /* Aligner à gauche */
+    height: 100%; /* Hauteur totale */
+    width: 100%; /* Largeur totale */
+    z-index: 1004; /* Z-index élevé */
+    background: rgba(0, 0, 0, .8); /* Fond semi-transparent */
+    display: flex; /* Disposition flexible */
+    align-items: center; /* Alignement vertical centré */
+    justify-content: center; /* Justification centrée */
+    padding: 0 1rem; /* Padding intérieur */
+}
+
+/* Formulaire de recherche actif */
+#search-form.active {
+    top: 0; /* Positionner en haut de l'écran */
+}
+
+/* Style pour la boîte de recherche */
+#search-form #search-box {
+    width: 50rem; /* Largeur de la boîte */
+    border-bottom: .1rem solid #fff; /* Bordure inférieure blanche */
+    padding: 1rem 0; /* Padding intérieur */
+    color: #fff; /* Couleur du texte */
+    font-size: 3rem; /* Taille de police */
+    text-transform: none; /* Pas de transformation de texte */
+    background: none; /* Pas de fond */
+}
+
+/* Placeholder de la boîte de recherche */
+#search-form #search-box::placeholder {
+    color: #eee; /* Couleur du placeholder */
+}
+
+/* Suppression du bouton d'annulation de recherche */
+#search-form #search-box::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+}
+
+/* Style pour les labels du formulaire de recherche */
+#search-form label {
+    color: #fff; /* Couleur du texte */
+    cursor: pointer; /* Curseur de pointeur */
+    font-size: 3rem; /* Taille de police */
+}
+
+/* Hover sur les labels du formulaire de recherche */
+#search-form label:hover {
+    color: var(--green); /* Couleur de survol */
+}
+
+/* Fermeture du formulaire de recherche */
+#search-form #close {
+    position: absolute; /* Positionnement absolu */
+    color: #fff; /* Couleur du texte */
+    cursor: pointer; /* Curseur de pointeur */
+    top: 2rem; /* Positionnement en haut */
+    right: 3rem; /* Positionnement à droite */
+    font-size: 5rem; /* Taille de police */
+}
+
+/* Style pour les icônes de l'en-tête */
+header .icons i,
+header .icons a {
+    cursor: pointer; /* Curseur de pointeur */
+    height: 4.5rem; /* Hauteur */
+    line-height: 4.5rem; /* Hauteur de ligne */
+    width: 4.5rem; /* Largeur */
+    text-align: center; /* Texte centré */
+    font-size: 1.4rem; /* Taille de police */
+    color: white; /* Couleur du texte */
+    margin-right: 1rem; /* Marge droite */
+    background: var(--black); /* Fond noir */
+    border-radius: 50%; /* Bordures arrondies */
+}
+
+/*les icônes de l'en-tête */
+header .icons i:hover,
+header .icons a:hover{
+    color: #ffffff; /* Couleur blanche au survol */
+    background: #192a56; /* Fond noir au survol */
+    transform: rotate(360deg); /* Rotation de 360 degrés au survol */
+}
+
+header .navbar a.active,
+header .navbar a:hover{
+    background:rgba(0, 0, 0, 0.721);/* Fond semi-transparent au survol ou actif */
+}
+
+/* Conteneur des planètes en ligne */
+.planet-row {
+    display: flex; /*in the same line*/
+}
+
+/* Conteneur des planètes */
+.planet-container {
+    position: relative; /* Position relative pour les enfants positionnés */
+    display: flex; /* Affichage flexible */
+    align-items: center; /* Alignement vertical centré */
+    
+}
+
+/* Style pour la lune */
+#moon1 {
+    width: 60px; /* Largeur de la lune */
+}
+
+/* Style pour les images de la Terre, du Soleil et de la Lune */
+.moonearthsun {
+    width: 50px; /* Largeur des images */
+    transition: transform 0.6s ease; /* Transition de transformation douce */
+    vertical-align: middle; /* Alignement vertical au milieu */
+    margin-right: 5px; /* Marge droite */
+}
+
+/* Texte des planètes */
+.planet span {
+    opacity: 0; /* Texte invisible par défaut */
+    position: absolute; /* Positionnement absolu */
+    top: 25%; /* Positionnement vertical */
+    left: 50%; /* Positionnement horizontal */
+    transform: translateX(-50%); /* Centrer horizontalement */
+    padding: .5rem 1.5rem; /* Padding intérieur */
+    border-radius: 5.5rem; /* Bordures arrondies */
+    white-space: nowrap; /* Pas de retour à la ligne */
+    color: white; /* Couleur du texte */
+    transition: opacity .8s ease; /* Transition de l'opacité douce */
+}
+
+/* Texte visible au survol */
+.planet:hover span {
+    opacity: 1; /* Texte visible */
+    animation: slide .5s forwards; /* Animation de glissement */
+}
+
+/* Animation des images au survol */
+.planet-container:hover .moonearthsun {
+    animation: slide .8s forwards; /* Animation de glissement */
+    transform: translateX(70px); /* Translation de 70px au survol */
+}
+
+/* Animation des planètes */
+.planet-container .planet {
+    animation: slide .5s forwards; /* Animation de glissement */
+    width: 120px; /* Largeur des planètes */
+}
+
+/* Animation des planètes au survol */
+.planet-container:hover .planet {
+    animation: slide 1s forwards; /* Animation de glissement au survol */
+}
+
+/* Style général pour les sections */
+section {
+    height: 100vh; /* Hauteur de la fenêtre */
+    align-items: center; /* Alignement vertical centré */
+    justify-content: 106px; /* Justification horizontale */
+    text-transform: uppercase; /* Texte en majuscules */
+    font-weight: bold; /* Texte en gras */
+}
+
+/*home section start here*/
+#home{
+    background-color: black; /* Arrière-plan noir */
+}
+
+/* Slider de la section home */
+.home-slider {
+    width: 100%; /* Largeur complète */
+    height: 100vh; /* Hauteur de la fenêtre */
+    overflow: hidden; /* Masquer le débordement */
+}
+
+/* Slide du slider home */
+.home .home-slider .slide {
+    display: flex; /* Affichage en flex */
+    align-items: flex-start; /* Alignement en haut */
+    flex-wrap: wrap; /* Flex wrap */
+    gap: 2rem; /* Espacement entre les éléments */
+    padding-top: 11em; /* Padding en haut */
+}
+/* Contenu des slides */
+.home .home-slider .slide .content {
+    flex: 1 1 45rem;/* Flexibilité et taille */
+    z-index: 1; /* Ensure the content is on top of the video */
+    text-align: center;/* Centrer le texte */
+    color: white;  /* Couleur du texte */
+}
+
+/* Style pour le texte Astronomy */
+.Astronomy {
+    color: rgb(255, 255, 255); /* Couleur blanche */
+    font-size: 8em;/* Taille du texte */
+    font-family: "Playfair Display", serif; /* Example: Change font family */
+    text-transform: uppercase; /* Corrected to make text uppercase */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Example: Add text shadow for better visibility */
+    /* Add any other styling you desire */
+}
+
+/* Style pour la vidéo d'arrière-plan */
+#video-bg1 {
+    position: absolute; /* Positionnement absolu */
+    top: 0; /* En haut */
+    left: 0; /* À gauche */
+    width: 100%; /* Largeur complète */
+    height: 100%; /* Hauteur complète */
+    object-fit: cover; /* Ajustement de l'objet */
+    z-index: -1; /* Ensure the video covers the entire slide */
+    /* Place the video behind other content */
+}
+
+/*introduction css*/
+#video-bg2 {
+    position: fixed; /* Position fixe */
+    right: 0; /* À droite */
+    bottom: 0; /* En bas */
+    min-width: 100%; /* Largeur minimale complète */
+    min-height: 100%; /* Hauteur minimale complète */
+    z-index: -1; /* Place la vidéo derrière le contenu */
+  }
+
+
+.introduction .content2 h3 {
+    color: white; /* Couleur blanche */
+    font-size: 3em; /* Taille du texte */
+    position: absolute; /* Positionnement absolu */
+}
+
+.content2 {
+    margin-top: -140px; /* Marge en haut */
+}
+
+.contenttexto span {
+    font-size: 8px; /* Taille du texte */
+}
+
+/* Alignement des valeurs */
+.contenttexto .nbr {
+    margin-left: 13px; /* Marge à gauche */
+    margin-top: -10px; /* Marge en haut */
+    font-size: 10px; /* Taille du texte */
+}
+
+.content2 .contenttexto h3{
+    margin-bottom: 110px;/* Marge en bas */
+    width: calc(70% + 5%); /* Augmenter la largeur du carré en ajoutant 5% */
+    height: auto; /* La hauteur s'ajustera automatiquement au contenu */
+    text-align: center; /* يوجه النص إلى الوسط أفقيًا */
+    display: flex;
+    justify-content: center; /* Aligns the text horizontally to the center */
+    align-items: center; /* Aligns the text vertically to the center */
+    background-color: rgba(61, 61, 61, 0.301); /* Change the background color as desired */
+    padding: 21px; /* Add padding to create space around the text */
+    padding-right: 61px; /* Ajouter un padding à droite pour créer de l'espace entre le texte et le bord droit */
+    border-radius: 10px; /* Add border radius for rounded corners */
+    z-index: -1;
+    position: absolute; /* Position the square */
+    left: 5%; /* Place the square 50% from the left */
+    bottom: -70%;/*place the square in the midle of the page */
+    font-family: system-ui;
+    font-size: 19px;
+    text-align: left;/* Alignement à gauche */
+    line-height: 1.5; /* Adjust the line height for spacing between lines */
+}
+
+
+.content2 .contenttexto2 h3{
+    margin-bottom: -136px;
+    width: calc(70% + 5%); /* Augmenter la largeur du carré en ajoutant 5% */
+    height: auto; /* La hauteur s'ajustera automatiquement au contenu */
+    text-align: center; /* يوجه النص إلى الوسط أفقيًا */
+    display: flex;
+    justify-content: center; /* Aligns the text horizontally to the center */
+    align-items: center; /* Aligns the text vertically to the center */
+    background-color: rgba(61, 61, 61, 0.301); /* Change the background color as desired */
+    padding: 21px; /* Add padding to create space around the text */
+    padding-left: 69px; /* Ajouter un padding à droite pour créer de l'espace entre le texte et le bord droit */
+    border-radius: 10px; /* Add border radius for rounded corners */
+    z-index: -1;
+    position: absolute; /* Position the square */
+    left: 20%; /* Place the square 50% from the left */
+    bottom: -70%;/*place the square in the midle of the page */
+    font-family: system-ui;
+    font-size: 19px;
+    line-height: 1.5; /* Adjust the line height for spacing between lines */
+}
+
+/* Bouton Explore */
+.explorebtn {
+    position: absolute; /* Position the button absolutely */
+    bottom: -62rem; /* Align the button to the bottom */
+    left: 56%; /* Align the button horizontally to the center */
+    transform: translateX(-50%); /* Center the button horizontally */
+}
+
+button{
+    width: 15rem; /* Largeur du bouton */
+    height: 6rem; /* Hauteur du bouton */
+    padding: 0; /* Pas de padding */
+    display: flex; /* Flex display */
+    justify-content: center;/*l'ecriture in the middel of the button*/
+    align-items: center; /* Centrer verticalement */
+    overflow: hidden; /* Masquer le débordement */
+    background-size: 300% 300%; /* Taille de fond */
+    backdrop-filter: blur(1rem); /* Flou de fond */
+    border-radius: 5rem; /* Bordures arrondies */
+    transition: 0.5s; /* Transition */
+    animation: animGradient 5s ease infinite; /* Animation de gradient */
+    border: double 3px transparent; /* Bordure double transparente */
+    background-image:
+        linear-gradient(#212121, #212121), /* Gradient de fond */
+        linear-gradient(137deg, #7679d2 10%, #062dee 45%, #4639ffa5 67%, #0044ff 87%);
+    background-origin: border-box; /* Origine du fond */
+    background-clip: content-box, border-box; /* Clip du fond */
+}
+
+.container-stars {
+    width: 100%; /* Largeur complète */
+    height: 100%; /* Hauteur complète */
+    position: absolute; /* Positionnement absolu */
+    overflow: hidden; /* Masquer le débordement */
+    transform: 0.5s; /* Transformation */
+    backdrop-filter: blur(1rem); /* Flou de fond */
+    border-radius: 5rem; /* Bordures arrondies */
+    z-index: -1; /* Derrière le contenu */
+}
+
+strong {
+    z-index: 2; /* Priorité sur le contenu */
+    font-size: 12px; /* Taille du texte */
+    color: #FFFFFF; /* Couleur blanche */
+    font-family: sans-serif; /* Police de caractères */
+    letter-spacing: 5px; /* Espacement des lettres */
+    text-shadow: 0 0 4px white; /* Ombre du texte */
+}
+
+.glow {
+    width: 12rem; /* Largeur */
+    position: absolute; /* Positionnement absolu */
+    display: flex; /* Flex display */
+}
+
+.circle {
+    width: 100%; /* Largeur complète */
+    height: 30px; /* Hauteur */
+    filter: blur(2rem); /* Filtre de flou */
+    animation: animPulse 4s infinite; /* Animation de pulsation */
+    z-index: -1; /* Derrière le contenu */
+}
+
+/* Styles pour différentes cercles */
+.circle:nth-of-type(1) {
+    background: #fe53ba1e; /* Couleur de fond */
+}
+
+.circle:nth-of-type(2) {
+    background: #8e51ea19; /* Couleur de fond */
+}
+
+/* Arrière-plan des étoiles */
+.introduction .starss {
+    width: 200rem; /* Largeur */
+    height: 200rem; /* Hauteur */
+    position: relative; /* Position relative */
+    background: transparent; /* Arrière-plan transparent */
+}
+
+/* Animation des étoiles */
+.starss::after {
+    content: ""; /* Contenu vide */
+    width: 100%; /* Largeur complète */
+    height: 100%; /* Hauteur complète */
+    position: absolute; /* Positionnement absolu */
+    top: -10rem; /* En haut */
+    left: -100rem; /* À gauche */
+    animation: animStarRotate 90s linear infinite; /* Animation de rotation */
+}
+
+/* Animation des étoiles */
+.starss::after {
+    background-image: radial-gradient(#ffffff 1px, transparent 1%); /* Gradient radial */
+    background-size: 50px 50px; /* Taille de fond */
+}
+
+/* Styles for the star background */
+.starss::before {
+    content: "";
+    width: 170px;
+    height: 500%; /* Height of the star field */
+    position: absolute;
+    top: 0;
+    left: -50%; /* Position off-screen to create a seamless scrolling effect */
+    animation: animStar 60s linear infinite; /* Animation to move stars vertically */
+}
+
+.starss::before {
+    background-image: radial-gradient(#ffffff 1px, transparent 1%);
+    background-size: 50px 50px; /* Size of the stars */
+    opacity: 0.5; /* Opacity of the stars */
+}
+
+/* Keyframes pour l'animation des étoiles */
+@keyframes animStar {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-135rem); /* Distance stars will travel vertically */
+    }
+}
+
+/* Keyframes pour la rotation des étoiles */
+@keyframes animStarRotate {
+    from{
+        transform: rotate(360deg);
+    }
+    to{
+        transform: rotate(0);
+    }
+}
+
+/* Keyframes pour l'animation du dégradé */
+@keyframes animGradient {
+    0%{
+        background-position: 0% 50%;
+    }
+    50%{
+        background-position: 100% 50%;
+    }
+    100%{
+        background-position: 0% 50%;
+    }
+}
+
+/* Keyframes pour l'animation de pulsation du bouton */
+@keyframes animPulse {
+    0%{
+       transform: scale(0.75);
+       box-shadow: 0 0 0 0 #000000b3;
+    }
+    70%{
+        transform: scale(1);
+       box-shadow: 0 0 0 0 #00000000;
+    }
+    100%{
+        transform: scale(0.75);
+        box-shadow: 0 0 0 0 #00000000;
+    }
+}
+
+/* Styles pour l'effet de survol du bouton */
+button:hover .container-stars {
+    z-index: 1;
+    background-color: #212121; /* Changer la couleur de fond au survol */
+}
+
+button:hover {
+    transform: scale(1.1); /* Mettre le bouton à l'échelle au survol */
+}
+
+/* Styles pour l'état actif du bouton */
+button:active {
+    border: double 4px #FE53BB; /* Ajouter une bordure au clic */
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    animation: none; /* Supprimer l'animation au clic */
+}
+
+/* Keyframes pour la rotation de la planète */
+@keyframes planetRotate {
+    0% {
+        background-position: 0% center;
+    }
+    100% {
+        background-position: -200% center;
+    }
+}
+
+/* Styles pour la carte */
+.card {
+    display: flex; /* Utilisation de flexbox pour aligner les éléments */
+    flex-direction: column; /* Disposition en colonne des éléments enfants */
+    align-items: center; /* Alignement centré des éléments enfants */
+    position: relative; /* Position relative pour les éléments enfants positionnés absolument */
+    font-family: "Majoor mono Display"; /* Police de caractères */
+}
+
+/* Styles pour la surface de la planète ou du soleil */
+.surface {
+    height: 100%; /* Hauteur à 100% de son conteneur */
+    width: 100%; /* Largeur à 100% de son conteneur */
+    position: absolute; /* Position absolue pour le positionnement */
+    z-index: -1; /* Z-index en arrière-plan pour empiler sous les autres éléments */
+    background-image: var(--image); /* Image de fond dynamique */
+    block-size: cover; /* Couvrir toute la surface */
+    transform: var(--tilt) scale(1.2); /* Transformation avec inclinaison et échelle */
+    animation: planetRotate calc(var(--day)*1.1s) linear infinite; /* Animation de rotation */
+}
+
+/* Styles pour l'atmosphère de la planète */
+.atmosphere {
+    margin-left: 650px; /* Marge à gauche pour le positionnement */
+    margin-top: 192px; /* Marge en haut pour le positionnement */
+    height: 190px; /* Hauteur de l'atmosphère */
+    width: 190px; /* Largeur de l'atmosphère */
+    position: relative; /* Position relative pour les éléments enfants positionnés absolument */
+    background: radial-gradient(circle at 30% 50%, #ffffff4d 0%, #ffffff00 65%); /* Dégradé radial pour l'atmosphère */
+    border-radius: 100px; /* Bordure arrondie pour donner la forme d'un cercle */
+    overflow: hidden; /* Masquer le contenu débordant */
+    box-shadow: /* Ombre de l'atmosphère */
+        inset 10px 0px 12px -2px #ffffff33,
+        inset -70px 0px 50px 0px rgba(0, 0, 0, 0.685),
+        -5px 0px 20px -4px var(--color);
+}
+
+/* Pseudo-élément pour représenter la planète */
+.planet::before {
+    margin-left: 320px; /* Marge à gauche pour le positionnement */
+    margin-top: 171px; /* Marge en haut pour le positionnement */
+    content: ""; /* Contenu vide pour un élément pseudo */
+    position: absolute; /* Position absolue pour le positionnement */
+    height: 190px; /* Hauteur de l'élément pseudo */
+    z-index: -1; /* Z-index en arrière-plan pour empiler sous les autres éléments */
+    left: 50%; /* Position à 50% de son conteneur parent */
+    top: 0%; /* Position en haut de son conteneur parent */
+    transform: var(--tilt) scale(1.2); /* Transformation avec inclinaison et échelle */
+}
+
+/* Styles pour le soleil */
+.sun {
+    --image: var(--sun-image); /* Image de fond du soleil */
+    --color: var(--sun-color); /* Couleur du soleil */
+    --tilt: var(--sun-tilt); /* Inclinaison du soleil */
+    --day: var(--sun-day); /* Durée du jour pour l'animation */
+}
+
+/* Styles pour la lune */
+.moon {
+    --image: var(--moon-image); /* Image de fond de la lune */
+    --color: var(--moon-color); /* Couleur de la lune */
+    --tilt: var(--moon-tilt); /* Inclinaison de la lune */
+    --day: var(--moon-day); /* Durée du jour pour l'animation */
+}
+
+/* Styles pour une deuxième surface (peut-être une autre planète) */
+/* Les mêmes styles que la première surface */
+.surface2 {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: -1;
+    background-image: var(--image);
+    block-size: cover;
+    transform: var(--tilt) scale(1.2);
+    animation: planetRotate calc(var(--day)*1.1s) linear infinite;
+}
+
+/* Styles pour une deuxième atmosphère */
+ /* Les mêmes styles que la première atmosphère */
+.atmosphere2{
+    margin-left: -430px;
+    margin-top: 65px;
+    height: 190px;
+    width: 190px;
+    position: relative;
+    background: 
+    radial-gradient(circle at 30% 50%,
+           #ffffff4d 0%,
+           #ffffff00 65%);
+    border-radius: 100px;
+    overflow: hidden;
+    box-shadow:
+    inset 10px 0px 12px -2px #ffffff2d,
+    inset -70px 0px 50px 0px rgba(255, 116, 10, 0),
+    0px 0px 20px 0px var(--color);
+}
+
+/* Pseudo-élément pour représenter la deuxième planète */
+/* Les mêmes styles que le pseudo-élément pour la première planète */
+.planet2::before{
+    margin-left: -335px;
+    margin-top: 202px;
+    content: "";
+    position: absolute;
+    height: 190px;
+    z-index: -1;
+    left: 50%;
+    top: 0%;
+    transform: var(--tilt) scale(1.2);
+}
+
+
+/* our team section start here */
+/* Styles pour la section "Notre équipe" */
+.ourteam {
+    position: relative; /* Position relative pour les éléments positionnés absolument à l'intérieur */
+    width: 100%; /* Largeur maximale de la section */
+    margin-top: 190px; /* Marge en haut de la section */
+    display: flex; /* Utilisation de flexbox pour aligner les éléments enfants */
+    align-items: center; /* Alignement centré des éléments enfants */
+    justify-content: center; /* Centrage horizontal des éléments enfants */
+    flex-direction: column; /* Disposition en colonne des éléments enfants */
+}
+
+/* Styles pour le contenu de l'équipe */
+.team-content {
+    width: 100%; /* Largeur maximale du contenu */
+    max-width: 1350px; /* Largeur maximale du contenu */
+    margin: 0 auto; /* Centrage horizontal du contenu */
+    display: grid; /* Utilisation de CSS Grid pour le contenu */
+    grid-template-columns: repeat(auto-fit, minmax(150px, auto)); /* Colonnes de largeur automatique avec un minimum de 150px */
+    align-items: center; /* Alignement centré des éléments enfants */
+    gap: 2rem; /* Espace entre les éléments enfants */
+    text-align: center; /* Alignement du texte au centre */
+    margin-top: 4rem; /* Marge en haut du contenu */
+}
+
+/* Styles pour les images d'équipe */
+.team-content img {
+    width: 100%; /* Largeur maximale de l'image */
+    height: auto; /* Hauteur automatique pour conserver les proportions */
+    border-radius: 15px; /* Bordure arrondie */
+    margin-bottom: 15px; /* Marge en bas de l'image */
+}
+
+/* Styles pour le titre central */
+.center h1 {
+    color: #fff; /* Couleur du texte */
+    font-size: 4rem; /* Taille de la police */
+    text-align: center; /* Alignement du texte au centre */
+}
+
+/* Styles pour la boîte de contenu 2 */
+.box2 {
+    padding: 16px; /* Remplissage intérieur de la boîte */
+    background: #0d162e; /* Couleur de fond de la boîte */
+    border-radius: 15px; /* Bordure arrondie */
+    transition: all .38s ease; /* Transition douce de toutes les propriétés */
+}
+
+.box2 h3 {
+    font-size: 23px; /* Taille de la police pour le titre */
+    font-weight: 600; /* Poids de la police pour le titre */
+    color: #fff; /* Couleur du texte pour le titre */
+    margin-bottom: 8px; /* Marge en bas du titre */
+}
+
+.box2 h5 {
+    font-size: 15px; /* Taille de la police pour le sous-titre */
+    font-weight: 600; /* Poids de la police pour le sous-titre */
+    color: #b7b4bb; /* Couleur du texte pour le sous-titre */
+    margin-bottom: 15px; /* Marge en bas du sous-titre */
+    letter-spacing: 2px; /* Espacement des caractères pour le sous-titre */
+}
+
+/* Styles pour les icônes sociales */
+.social-icons {
+    margin: 30px auto; /* Marge autour des icônes sociales */
+    text-align: center; /* Alignement du texte au centre */
+}
+
+.social-icons img {
+    width: 30px; /* Largeur des icônes sociales */
+    margin: 0 12px; /* Marge entre les icônes sociales */
+    cursor: pointer; /* Curseur de pointeur pour les icônes sociales */
+}
+
+/* Styles pour les icônes sociales au survol */
+.social-icons i:hover {
+    transform: scale(1.2); /* Agrandissement des icônes au survol */
+}
+
+/* Styles pour la boîte 2 au survol */
+.box2 :hover {
+    transform: translateY(-10px); /* Translation vers le haut au survol */
+    cursor: pointer; /* Curseur de pointeur au survol */
+}
+
+/* footer section start here */
+/* Styles généraux pour le pied de page */
+footer {
+    background: rgb(0, 0, 0); /* Fond noir pour le pied de page */
+    padding: 60px 0; /* Remplissage en haut et en bas du pied de page */
+    margin-top: 0%; /* Marge en haut du pied de page */
+}
+
+/* Styles pour le logo du pied de page */
+footer .logo {
+    color: #ffffff; /* Couleur du texte du logo */
+    font-size: 4rem; /* Taille de la police du logo */
+    font-weight: bolder; /* Poids de la police du logo */
+}
+
+/* Styles pour la grille de contenu du pied de page */
+footer > div {
+    display: grid; /* Utilisation de CSS Grid pour le contenu */
+    grid-template-columns: repeat(4, 1fr); /* Quatre colonnes de largeur égale */
+}
+
+/* Styles pour le texte de copyright du pied de page */
+footer .copyright span {
+    color: #fff; /* Couleur du texte de copyright */
+    font-size: 12px; /* Taille de la police du texte de copyright */
+    display: inline-block; /* Affichage en ligne du texte de copyright */
+    margin-top: 5px; /* Marge en haut du texte de copyright */
+}
+
+/* Styles pour les images de copyright dans le pied de page */
+footer .copyright img {
+    height: 30px; /* Hauteur des images de copyright */
+}
+
+/* Styles pour les titres de niveau 1 dans le pied de page */
+footer h1 {
+    font-size: 18px; /* Taille de la police pour les titres */
+    position: relative; /* Positionnement relatif pour les titres */
+    margin-bottom: 30px; /* Marge en bas des titres */
+    color: white; /* Couleur du texte des titres */
+}
+
+/* Styles pour le séparateur après les titres de niveau 1 dans le pied de page */
+footer h1:after {
+    content: ''; /* Contenu vide pour le séparateur */
+    position: absolute; /* Positionnement absolu pour le séparateur */
+    left: 0; /* Positionnement à gauche du séparateur */
+    bottom: -8px; /* Décalage vers le bas du séparateur */
+    display: block; /* Affichage en bloc du séparateur */
+    width: 60px; /* Largeur du séparateur */
+    height: 2px; /* Hauteur du séparateur */
+    background: var(rgb(255, 255, 255)); /* Couleur de fond du séparateur */
+}
+
+/* Styles pour les listes non ordonnées dans le pied de page */
+footer ul {
+    list-style-type: none; /* Suppression des puces de liste */
+}
+
+/* Styles pour les éléments de liste pairs dans le pied de page */
+footer ul li:nth-child(even) {
+    margin: 10px 0; /* Marge des éléments de liste pairs */
+}
+
+/* Styles pour les liens dans le pied de page */
+footer ul li a {
+    color: white; /* Couleur des liens */
+    text-decoration: none; /* Suppression du soulignement des liens */
+    font-size: 14px; /* Taille de la police des liens */
+    transition: all .3s ease-in-out; /* Transition douce pour les changements de style */
+}
+
+footer ul li a:hover {
+    color: white; /* Couleur des liens au survol */
+}
+
+/* Styles pour les icônes de réseaux sociaux dans le pied de page */
+footer .footer-socials a {
+    margin-right: 20px; /* Marge à droite des icônes de réseaux sociaux */
+    font-size: 22px; /* Taille de la police des icônes de réseaux sociaux */
+    color: white; /* Couleur des icônes de réseaux sociaux */
+}
+
+footer .footer-socials img {
+    width: 30px; /* Largeur des icônes de réseaux sociaux */
+    margin: 0 12px; /* Marge autour des icônes de réseaux sociaux */
+    cursor: pointer; /* Curseur de pointeur pour les icônes de réseaux sociaux */
+}
+
+footer .footer-socials a:hover {
+    color:#8f5822; /* Couleur des icônes de réseaux sociaux au survol */
+}
+
+.footer-socials img {
+    width: 30px; /* Largeur des icônes de réseaux sociaux */
+    margin: 0 12px; /* Marge autour des icônes de réseaux sociaux */
+    cursor: pointer; /* Curseur de pointeur pour les icônes de réseaux sociaux */
+}
+
+/* loader part start here */
+/* Conteneur du loader */
+.loader-container{
+    min-height: 100vh; /* Hauteur minimale égale à 100% de la hauteur de la fenêtre */
+    display: flex; /* Utilisation de flexbox pour le centrage vertical et horizontal */
+    justify-content: center; /* Centrage horizontal */
+    background: #272626f7; /* Couleur de fond avec une certaine transparence */
+    width: 100%; /* Largeur de 100% */
+    height: 100%; /* Hauteur de 100% */
+    align-items: center; /* Centrage vertical */
+    position: fixed; /* Position fixe par rapport à la fenêtre */
+    top: 0; /* Alignement en haut de la fenêtre */
+    left: 0; /* Alignement à gauche de la fenêtre */
+    z-index: 10000; /* Indice de positionnement pour s'assurer que le loader soit au-dessus des autres éléments */
+    overflow: hidden; /* Masquage du débordement pour éviter le défilement */
+}
+
+/* Animation de sortie du loader */
+.loader-container.fade-out{
+    top:110%; /* Déplace le loader vers le bas de la fenêtre */
+    opacity:0; /* Réduit l'opacité à 0 pour le rendre invisible */
+}
+
+/* Style des cercles du loader */
+.circle01{
+    position: absolute; /* Position absolue par rapport à son conteneur */
+    width: 300px; /* Largeur du premier cercle */
+    height: 300px; /* Hauteur du premier cercle */
+    border: 2px solid #191919; /* Bordure du cercle */
+    border-radius: 50%; /* Bordure arrondie pour créer un cercle */
+    animation: animate 3s linear infinite; /* Animation de rotation avec une durée de 3 secondes */
+}
+
+.circle02{
+    width: 200px; /* Largeur du deuxième cercle */
+    height: 200px; /* Hauteur du deuxième cercle */
+    animation: animate 6s linear infinite; /* Animation de rotation avec une durée de 6 secondes */
+}
+
+.circle03{
+    width: 100px; /* Largeur du troisième cercle */
+    height: 100px; /* Hauteur du troisième cercle */
+    animation: animate 2s linear infinite; /* Animation de rotation avec une durée de 2 secondes */
+}
+
+/* Définition de l'animation de rotation */
+@keyframes animate{
+    0%{
+        transform: rotate(0deg); /* Rotation de 0 degré au début de l'animation */
+    }
+    100%{
+        transform: rotate(360deg); /* Rotation de 360 degrés à la fin de l'animation pour revenir à la position initiale */
+    }
+}
+
+/* Style du point au centre de chaque cercle */
+.circle01::before{
+    content: ''; /* Contenu généré avant l'élément */
+    position: absolute; /* Position absolue par rapport au cercle */
+    top: -12px; /* Positionnement vers le haut pour le placer au centre */
+    left: 50%; /* Positionnement horizontal au centre */
+    transform: translateX(-50%); /* Décalage de 50% de la largeur pour le centrer horizontalement */
+    width: 20px; /* Largeur du point */
+    height: 20px; /* Hauteur du point */
+    background: var(--clr); /* Couleur de fond du point */
+    border-radius: 50%; /* Bordure arrondie pour créer un cercle */
+    box-shadow: 0 0 20px var(--clr), 0 0 60px var(--clr); /* Ombre pour créer un effet de halo */
+}
+
+/* Media queries pour les tailles d'écran spécifiques */
+@media(max-width=1240px) {
+    /* Styles pour les écrans de largeur maximale de 1240px */
+    .team {
+        width: 100%; /* Largeur maximale de la section d'équipe */
+        height: auto; /* Hauteur automatique de la section d'équipe */
+        padding: 90px 2%; /* Remplissage de la section d'équipe */
+    }
+
+    .center h1 {
+        font-size: 3.2rem; /* Taille de la police réduite pour le titre central */
+    }
+}
+
+@media (max-width:991px){
+    /* Styles pour les écrans de largeur maximale de 991px */
+    html {
+        font-size: 55%; /* Taille de la police globale réduite */
+    }
+
+    /* Styles pour la barre de navigation dans l'en-tête */
+    header {
+        padding: 1rem 2rem; /* Remplissage de l'en-tête */
+    }
+
+    /* Styles pour les sections */
+    section {
+        padding: 2rem; /* Remplissage des sections */
+    }
+}
+
+@media (max-width:768px){
+     /* Styles pour les écrans de largeur maximale de 768px */
+    /* Styles pour la navigation mobile */
+    header .icons #menu-bars {
+        display: inline-block; /* Affichage en ligne du menu mobile */
+    }
+    /* Styles pour la barre de navigation mobile */
+    header .navbar{
+        width: 100%;
+        top:100%; left:0; right:0;
+        background-size: cover;
+        background-position: center; 
+        height: 100px;
+        padding:1rem ;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        z-index: 1000;
+        box-shadow: var(--box-shadow);
+        text-align: center;    
+        position: absolute;
+        background:#0000005f;
+        border-top:.1rem solid rgba(0,0,0,.2);
+        border-bottom:.1rem solid rgba(0,0,0,.2);
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+        justify-content: center;
+        
+    }
+     /* Styles pour la barre de navigation mobile en mode actif */
+    header .navbar.active{
+        clip-path: polygon(0 0, 100% 0%, 100% 100%, 0 100%);
+    }
+
+     /* Styles pour les liens de navigation mobile */
+    header .navbar a{
+        display: block;
+        padding: 1.5rem;
+        margin: 1rem;
+        font-size: 2rem;
+        background: #fffdfd00;
+    }
+
+     /* Styles pour le texte des planètes mobiles */
+    .planet span {
+        opacity: 0;
+        position: absolute;
+        top:30%; /* Adjust spacing */
+        left: 50%; /* Center the text horizontally */
+        transform: translateX(-50%); /* Added */
+        padding: .5rem 1.5rem;
+        border-radius: 5.5rem;
+        white-space: nowrap;
+        color: white;
+        transition: opacity .8s ease;
+    }
+
+     /* Styles pour la zone de recherche mobile */
+    #search-form #search-box{
+        width: 90%;
+        margin: 0 1rem;
+    }
+
+    /* Styles pour le titre de la page d'accueil sur mobile */
+    .home .home-slider .slide .content h1{
+        font-size:5cap;
+    }
+    
+}
+
+@media (max-width:450px) {
+    /* Styles pour les écrans de largeur maximale de 450px */
+    html {
+        font-size: 50%; /* Taille de la police globale réduite */
+    }
+}
